@@ -3,18 +3,19 @@ package main
 import "testing"
 
 var tests = []struct{
-	name string
-	dividend float32
-	divisor float32
-	expected float32
-	isErr bool
-}{
-	{"valid-data", 100.0, 10.0, 10.0, false},
-	{"invalid-data", 100.0, 0.0, 0.0, true},
-	{"expected-5", 50.0, 10.0, 5.0, false},
-	{"expected-fraction", -1.0, -777.0, 0.0012870013, false},
-}
+		name string
+		dividend float32
+		divisor float32
+		expected float32
+		isErr bool
+	}{
+		{"valid-data", 100.0, 10.0, 10.0, false},
+		{"invalid-data", 100.0, 0.0, 0.0, true},
+		{"expected-5", 50.0, 10.0, 5.0, false},
+		{"expected-fraction", -1.0, -777.0, 0.0012870013, false},
+	}
 
+//table test
 func TestDivision(t *testing.T) {
 	for _, tt := range tests {
 		got, err := divide(tt.dividend, tt.divisor)
@@ -34,7 +35,7 @@ func TestDivision(t *testing.T) {
 	}
 }
 
-//manual way of testing
+//normal test
 //func TestDivide(t *testing.T)  {
 //	_, err := divide(10.0, 1.0)
 //	if err != nil {

@@ -6,7 +6,7 @@ import (
 )
 
 func main()  {
-	result, err := divide(100.0, 0)
+	result, err := divide(100.0, 10)
 
 	if err != nil {
 		log.Println(err)
@@ -14,7 +14,6 @@ func main()  {
 	}
 
 	log.Println("Result of division is", result)
-
 }
 
 func divide(x, y float32) (float32, error) {
