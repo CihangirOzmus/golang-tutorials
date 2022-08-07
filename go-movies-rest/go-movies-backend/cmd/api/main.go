@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -14,6 +15,12 @@ type Config struct {
 	env  string
 }
 
+type AppStatus struct {
+	Status      string `json:"status"`
+	Environment string `json:"environment"`
+	Version     string `json:"version"`
+}
+
 func main() {
 	var cfg Config
 
@@ -24,7 +31,21 @@ func main() {
 	fmt.Println("Running")
 
 	http.HandleFunc("/status", func(writer http.ResponseWriter, request *http.Request) {
-		fmt.Fprint(writer, "status")
+		currentStatus := AppStatus{
+			Status:      "Available",
+			Environment: cfg.env,
+			Version:     version,
+		}
+
+		js, err := json.MarshalIndent(currentStatus, "", "\t")
+
+		if err != nil {
+			log.Println(err)
+		}
+
+		writer.Header().Set("Content-Type", "application/json")
+		writer.WriteHeader(http.StatusOK)
+		writer.Write(js)
 	})
 
 	err := http.ListenAndServe(fmt.Sprintf(":%d", cfg.port), nil)
