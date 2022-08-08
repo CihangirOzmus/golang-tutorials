@@ -16,6 +16,8 @@ func (app *application) getOneMovie(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		app.logger.Print(errors.New("invalid id parameter"))
+		app.errorJson(w, err)
+		return
 	}
 
 	app.logger.Println("id is", id)
@@ -33,7 +35,6 @@ func (app *application) getOneMovie(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = app.writeJson(w, http.StatusOK, movie, "movie")
-
 }
 
 func (app *application) getAllMovies(w http.ResponseWriter, r *http.Request) {
